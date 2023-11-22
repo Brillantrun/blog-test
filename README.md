@@ -1,4 +1,4 @@
-# Vue Comment App
+# Blog test comment
 
 ## Prérequis
 - Node.js
