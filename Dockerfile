@@ -8,7 +8,6 @@ WORKDIR /app
 COPY . .
 
 RUN npm install -g npm@10.2.4
-
 # Installer les dépendances
 RUN npm install
 
