@@ -51,7 +51,8 @@ export default {
   },
   methods: {
     addComment(message: string, author: string, replay: any, type: string) {
-      let itemComments = [...this.comments]
+      let itemComments : Array<any>
+      itemComments = [...this.comments]
       const newComment = {
         id: Date.now(),
         autor: author,
@@ -78,10 +79,7 @@ export default {
           }
         }
         if (type !== '' && type === 'sub_comment') {
-          console.log(replay);
-          
           const subCommentFind = itemComments.filter(item => item.id === replay.parend_id)
-          console.log(subCommentFind);
           if (subCommentFind) {
             subCommentFind[0].children.push(
               {
@@ -100,16 +98,19 @@ export default {
         itemComments.push(newComment)
       }
       localStorage.setItem('comments', JSON.stringify(itemComments))
-      this.comments = JSON.parse(localStorage.getItem('comments'))
+      const storage = localStorage.getItem('comments')
+      if(storage){
+        this.comments = JSON.parse(storage)
+      }
       this.type = ''
     },
-    replaceObjectById(id: any, itemComments: array, newObject: any) {
+    replaceObjectById(id: any, itemComments: Array<any>, newObject: any) : Array<any>  {
       const index = itemComments.findIndex(item => item.id === id);
       if (index !== -1) {
         itemComments[index] = { ...newObject };
         return itemComments;
       } else {
-        console.error(`Object with ID ${id} not found.`);
+        return []
       }
     },
     replayComent(comment: any, type: string) {
@@ -121,7 +122,10 @@ export default {
 
   mounted() {
     if(localStorage.getItem('comments')){
-      this.comments = JSON.parse(localStorage.getItem('comments'))
+      const storage = localStorage.getItem('comments')
+      if(storage){
+        this.comments = JSON.parse(storage)
+      }
     }
   }
 
